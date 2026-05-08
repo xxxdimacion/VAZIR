@@ -357,7 +357,7 @@ export default function Home() {
               autoHeightClass="h-[180px] sm:h-[350px] lg:h-[400px]"
             />
             <GalleryCarousel 
-              title={<>Выплаты с трафика <span className="text-sm font-normal text-[#D9520E]">(20к$ за март-апрель)</span></>} 
+              title={<>Выплаты с трафика <span className="block sm:inline sm:ml-2 mt-1 sm:mt-0 text-sm font-normal text-[#D9520E]">(20к$ за март-апрель)</span></>}
               images={[
                 "https://i.ibb.co/hRfm4190/photo-1-2026-05-08-21-56-25-1.png",
                 "https://i.ibb.co/Y4rpRspp/photo-2-2026-05-08-21-56-25-1.png",
