@@ -1,8 +1,7 @@
 import React, { useState, useId, useCallback, useEffect } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import useEmblaCarousel from 'embla-carousel-react';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
 
@@ -16,7 +15,7 @@ const GalleryCarousel = ({
   autoHeightClass = "h-[220px] sm:h-[350px] lg:h-[400px]"
 }: { 
   images: string[], 
-  title?: string,
+  title?: React.ReactNode,
   aspectClass?: string,
   itemWidthClass?: string,
   imgClass?: string,
@@ -27,83 +26,26 @@ const GalleryCarousel = ({
     dragFree: true,
     containScroll: 'trimSnaps' 
   });
-  
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (selectedImageIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [selectedImageIndex]);
 
   return (
-    <>
-      <div className="w-full flex flex-col gap-6 mb-12 last:mb-0">
-        {title && <h3 className="text-2xl font-bold px-2">{title}</h3>}
-        <div className="overflow-hidden bg-white/40 rounded-3xl p-4 border border-stone-200/50" ref={emblaRef}>
-          <div className="flex gap-4 items-center">
-            {images.map((src, idx) => (
-              <div 
-                className={autoWidth ? `flex-[0_0_auto] min-w-0 flex items-center justify-center relative ${autoHeightClass} cursor-pointer` : `${itemWidthClass} min-w-0 relative ${aspectClass} bg-stone-100/50 rounded-2xl border border-stone-200 overflow-hidden shadow-sm cursor-pointer`} 
-                key={idx}
-                onClick={() => setSelectedImageIndex(idx)}
-              >
-                <img 
-                  src={src} 
-                  alt={`Slide ${idx + 1}`} 
-                  className={autoWidth ? "block max-h-full max-w-[85vw] sm:max-w-none w-auto h-auto pointer-events-none rounded-2xl border border-stone-200 shadow-sm" : `w-full h-full pointer-events-none ${imgClass}`} 
-                  referrerPolicy="no-referrer" 
-                  draggable="false"
-                />
-              </div>
-            ))}
-          </div>
+    <div className="w-full flex flex-col gap-6 mb-12 last:mb-0">
+      {title && <h3 className="text-2xl font-bold px-2">{title}</h3>}
+      <div className="overflow-hidden bg-white/40 rounded-3xl p-4 border border-stone-200/50" ref={emblaRef}>
+        <div className="flex gap-4 items-center">
+          {images.map((src, idx) => (
+            <div className={autoWidth ? `flex-[0_0_auto] min-w-0 flex items-center justify-center relative ${autoHeightClass}` : `${itemWidthClass} min-w-0 relative ${aspectClass} bg-stone-100/50 rounded-2xl border border-stone-200 overflow-hidden shadow-sm`} key={idx}>
+              <img 
+                src={src} 
+                alt={`Slide ${idx + 1}`} 
+                className={autoWidth ? "block max-h-full max-w-[85vw] sm:max-w-none w-auto h-auto pointer-events-none rounded-2xl border border-stone-200 shadow-sm" : `w-full h-full pointer-events-none ${imgClass}`} 
+                referrerPolicy="no-referrer" 
+                draggable="false"
+              />
+            </div>
+          ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {selectedImageIndex !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center"
-            onClick={() => setSelectedImageIndex(null)}
-          >
-            <button
-              onClick={() => setSelectedImageIndex(null)}
-              className="absolute top-4 right-4 z-[110] p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <div className="w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-              <TransformWrapper
-                initialScale={1}
-                minScale={0.5}
-                maxScale={4}
-                centerOnInit={true}
-              >
-                <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full flex items-center justify-center">
-                  <img
-                    src={images[selectedImageIndex]}
-                    alt={`Fullscreen Image ${selectedImageIndex + 1}`}
-                    className="max-w-full max-h-screen object-contain pointer-events-auto"
-                    referrerPolicy="no-referrer"
-                    draggable="false"
-                  />
-                </TransformComponent>
-              </TransformWrapper>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    </div>
   );
 };
 
@@ -408,18 +350,18 @@ export default function Home() {
                 "https://i.ibb.co/2YtC2BsD/photo-2026-05-07-19-48-14-3.jpg",
                 "https://i.ibb.co/35BJdwRb/photo-2026-05-07-19-48-14-2.jpg",
                 "https://i.ibb.co/tw4LxmQ7/photo-2026-05-07-20-12-38.jpg",
-                "https://i.ibb.co/cSSqLvQg/photo-2026-05-07-20-12-39.jpg"
+                "https://i.ibb.co/cSSqLvQg/photo-2026-05-07-20-12-39.jpg",
+                "https://i.ibb.co/m5zNDCLt/Group-1000011032.png"
               ]} 
               autoWidth={true}
               autoHeightClass="h-[180px] sm:h-[350px] lg:h-[400px]"
             />
             <GalleryCarousel 
-              title="Выплаты с проектов" 
+              title={<>Выплаты с трафика <span className="text-sm font-normal text-[#D9520E]">(20к$ за март-апрель)</span></>} 
               images={[
                 "https://i.ibb.co/hRfm4190/photo-1-2026-05-08-21-56-25-1.png",
                 "https://i.ibb.co/Y4rpRspp/photo-2-2026-05-08-21-56-25-1.png",
-                "https://i.ibb.co/FkbtV55c/photo-3-2026-05-08-21-56-25-1.png",
-                "https://i.ibb.co/m5zNDCLt/Group-1000011032.png"
+                "https://i.ibb.co/FkbtV55c/photo-3-2026-05-08-21-56-25-1.png"
               ]} 
               autoWidth={true}
               autoHeightClass="h-[380px] sm:h-[550px] lg:h-[650px]"
