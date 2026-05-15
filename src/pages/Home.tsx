@@ -219,7 +219,7 @@ export default function Home() {
               <div className="w-full h-full bg-[#FAFAFA] flex items-center justify-center overflow-hidden relative">
                 <iframe 
                   className="w-full h-full"
-                  src="https://iframe.mediadelivery.net/embed/634586/27851b22-940d-48ea-8b6a-33b7be6e3dc2?autoplay=false&loop=false&muted=false&preload=true&responsive=true" 
+                  src="https://player.mediadelivery.net/embed/634586/3e330e7a-3936-4d88-bb8c-cd65a30f8f25?autoplay=false&loop=false&muted=false&preload=true&responsive=true" 
                   title="Academy Video" 
                   frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
